@@ -13,6 +13,53 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
 </head>
+<style>
+.navbar {
+    display: flex;
+    background-color: black;
+    font-size: 26px;
+    font-family: monospace;
+ }
+ .container {
+    flex:1;
+ }
+ #submitButton {
+    position: relative;
+    left: -60px;
+    top: -28.5px;
+ }
+ #input1 {
+    position: relative;
+    left: 60px;
+    top: 29px;
+    font-size: 16px;
+ }
+ .navbar-brand {
+    color: rgb(48, 99, 129);
+    font-size: 26px;
+ }
+ .p1 {
+    text-shadow: 15px 20px #24113d;
+    position: relative;
+    top: -20px;
+ }
+ #container33 {
+
+  display: flex;
+ }
+ .jojo {
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+  align-content: center;
+  align-items: center
+ }
+ img {
+   width: 700px;
+   align-items: center;
+ }
+
+</style>
 <body>
 
 <nav class="navbar">
@@ -29,7 +76,7 @@
    </form>
  </div>
 </nav>
-<div class="container">
+<div id="container33">
   
 
   </div>
@@ -39,11 +86,31 @@
 
     $("#submitButton").on("click", function (e) {
     e.preventDefault();
-    let movie = $("#input1").val();
-    console.log(movie);
+    let keyword = $("#input1").val();
+    console.log(keyword);
+
+
+      $.ajax({
+  type:"GET",
+  url:"https://app.ticketmaster.com/discovery/v2/events.json?size=5&keyword=" + keyword + "&apikey=pBf0vPvFVvEYxX2QED6w3nO42LNdzL92",
+  async:true,
+  dataType: "json",
+  success: function(json) {
+              console.log(json);
+              $("#container33").addClass("jojo").append("Musical Artist: " + json._embedded.events[0].name + "<br>");
+              $("#container33").addClass("jojo").append("<a href = " + json._embedded.events[0].url + " > Buy Tickets Now </a>");
+              $("#container33").addClass("jojo").append("<img src = " + json._embedded.events[0].images[0].url + " >")
+              
+              
+           },
+  error: function(xhr, status, err) {
+    
+           }
 });
-
-</script>
-      var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
-
       
+});
+      
+
+      </script>
+      </body>
+      </html>
